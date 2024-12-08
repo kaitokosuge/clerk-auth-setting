@@ -1,14 +1,7 @@
-import { clerkClient } from "@clerk/nextjs/server";
+"use client";
 import React from "react";
 
-export default function DeleteUser({ user }: { user: any }) {
-	const deleteUser = async () => {
-		const client = await clerkClient();
-		if (user === null) {
-			return;
-		}
-		await client.users.deleteUser(user.id);
-	};
+export default function DeleteUser({ deleteUser }: { deleteUser: any }) {
 	return (
 		<div>
 			<div onClick={deleteUser}>削除</div>
