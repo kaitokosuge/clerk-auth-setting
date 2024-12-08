@@ -13,14 +13,13 @@ export default function RootLayout({
 }) {
 	return (
 		<ClerkProvider>
-			<html lang="en">
+			<html lang="ja">
 				<body>
 					<SignedOut>
+						Fruitsbase
 						<SignInButton />
 					</SignedOut>
-					<SignedIn>
-						<UserButton />
-					</SignedIn>
+					<SignedIn>Fruitsbase</SignedIn>
 					{children}
 				</body>
 			</html>

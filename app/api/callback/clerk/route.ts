@@ -56,6 +56,7 @@ export async function POST(req: Request) {
 	const eventType = evt.type;
 
 	if (eventType === "user.created") {
+		console.log("createが動いたよ");
 		try {
 			const resdata = await JSON.parse(body).data.username;
 			if (resdata === null) {
@@ -87,7 +88,21 @@ export async function POST(req: Request) {
 	}
 
 	if (eventType === "user.updated") {
+		console.log("updateが動いたよ");
 		try {
+			const resdata = await JSON.parse(body).data.username;
+			if (resdata === null) {
+				await prisma.user.update({
+					where: {
+						id: evt.data.id,
+					},
+					data: {
+						image: JSON.parse(body).data.image_url,
+						username: JSON.parse(body).data.first_name,
+					},
+				});
+				return new Response("User has been created!", { status: 200 });
+			}
 			await prisma.user.update({
 				where: {
 					id: evt.data.id,
