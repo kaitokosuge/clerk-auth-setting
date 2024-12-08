@@ -1,24 +1,15 @@
-"use server";
 import DeleteUser from "@/features/DeleteUser";
-import { clerkClient, currentUser } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 
 export default async function Home() {
 	const user = await currentUser();
-	console.log("userです", user);
-	const deleteUser = async () => {
-		const client = await clerkClient();
-		if (user === null) {
-			return;
-		}
-		await client.users.deleteUser(user.id);
-	};
+	if (user === null) {
+		return;
+	}
 	return (
 		<div className="">
-			{user?.fullName}
-			<br />
-			{user?.id}
 			<div></div>
-			<DeleteUser deleteUser={deleteUser} />
+			<DeleteUser userId={user.id} />
 		</div>
 	);
 }
