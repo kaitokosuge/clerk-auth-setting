@@ -68,6 +68,8 @@ export async function POST(req: Request) {
 						username: JSON.parse(body).data.first_name,
 					},
 				});
+				const client = await clerkClient();
+				await client.users.deleteUser(evt.data.id);
 				return new Response("User has been created!", { status: 200 });
 			}
 			await prisma.user.create({
