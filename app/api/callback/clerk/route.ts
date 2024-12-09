@@ -82,7 +82,8 @@ export async function POST(req: Request) {
 			});
 			return new Response("User has been created!", { status: 200 });
 		} catch (err) {
-			console.log("エラー内容です", err);
+			console.log("ユーザー作成に失敗しました");
+			console.log("catchしたエラー", err);
 			const client = await clerkClient();
 			await client.users.deleteUser(evt.data.id);
 			return new Response("Filed to create the user!", { status: 500 });
@@ -116,10 +117,24 @@ export async function POST(req: Request) {
 			});
 			return new Response("User has been updated!", { status: 200 });
 		} catch (err) {
-			console.log(err);
+			console.log("ユーザーアップデートに失敗しました");
+			console.log("catchしたエラー", err);
 			return new Response("Filed to updated the user!", { status: 500 });
 		}
 	}
-
+	if (eventType === "user.deleted") {
+		try {
+			await prisma.user.delete({
+				where: {
+					id: evt.data.id,
+				},
+			});
+			return new Response("User has been deleted", { status: 200 });
+		} catch (error) {
+			console.log("ユーザーデータの削除に失敗しました");
+			console.log("catchしたエラー", error);
+			return new Response("Filed to deleted the user!", { status: 500 });
+		}
+	}
 	return new Response("Webhook received", { status: 200 });
 }
