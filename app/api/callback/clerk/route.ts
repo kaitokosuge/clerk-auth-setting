@@ -2,7 +2,7 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import prisma from "@/lib/prisma";
-// import { clerkClient } from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/nextjs/server";
 
 export async function POST(req: Request) {
 	const SIGNING_SECRET = process.env.SIGNING_SECRET;
@@ -83,8 +83,8 @@ export async function POST(req: Request) {
 			return new Response("User has been created!", { status: 200 });
 		} catch (err) {
 			console.log("エラー内容です", err);
-			// const client = await clerkClient();
-			// await client.users.deleteUser(evt.data.id);
+			const client = await clerkClient();
+			await client.users.deleteUser(evt.data.id);
 			return new Response("Filed to create the user!", { status: 500 });
 		}
 	}
