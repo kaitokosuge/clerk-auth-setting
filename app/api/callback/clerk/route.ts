@@ -66,7 +66,7 @@ export async function POST(req: Request) {
 						clerkId: evt.data.id,
 						image: JSON.parse(body).data.image_url,
 						username: JSON.parse(body).data.first_name,
-						email: JSON.parse(body).data.email_address,
+						email: JSON.parse(body).data.email_addresses[0].email_address,
 					},
 				});
 				return new Response("User has been created!", { status: 200 });
@@ -77,7 +77,7 @@ export async function POST(req: Request) {
 					clerkId: evt.data.id,
 					image: JSON.parse(body).data.image_url,
 					username: JSON.parse(body).data.username,
-					email: JSON.parse(body).data.email_address,
+					email: JSON.parse(body).data.email_addresses[0].email_address,
 				},
 			});
 			return new Response("User has been created!", { status: 200 });
