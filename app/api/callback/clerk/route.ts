@@ -123,6 +123,7 @@ export async function POST(req: Request) {
 		}
 	}
 	if (eventType === "user.deleted") {
+		console.log("deleteが動いたよ");
 		try {
 			await prisma.user.delete({
 				where: {
