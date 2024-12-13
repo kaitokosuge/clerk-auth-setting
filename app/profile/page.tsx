@@ -22,6 +22,8 @@ const CustomPage = () => {
 export default function profile() {
 	return (
 		<div>
+			hello
+			<p>email</p>
 			<div>
 				<UserButton>
 					<UserButton.UserProfilePage
