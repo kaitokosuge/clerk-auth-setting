@@ -1,36 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+認証(Oauth)は clerk に全面的に任せている状態。（ブラックボックス状態 😢）
 
-## Getting Started
+認可は clerk の認証済みユーザーの存在有無をチェックできる`auth`を使い、API リクエストのバリデーションを next.js の routehandler、または servercomponent で行う。
+(auth が何をしているのか理解したい、おそらくセッション or トークンの確認)
 
-First, run the development server:
+auth  
+https://clerk.com/docs/references/nextjs/auth
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+currentUser でも同じことができるが、auth は多機能
+https://clerk.com/docs/references/nextjs/current-user
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 新規登録のフロー
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1.clerk と Google or clerk と Github の oauth or email password  
+2.認証成功後、clerk の webhook を使いコールバック処理  
+3.コールバック処理で supabase にもユーザー情報を保存（この時のセキュリティは svix）
+svix
+https://docs.svix.com/receiving/verifying-payloads/how
